@@ -1,0 +1,65 @@
+<div class="row" style="background-color: #333;">
+    <div class="col-lg-8">
+      <app-home></app-home>
+    </div>
+    <div class="col-lg-4">
+      <app-pokemon-search></app-pokemon-search>
+    </div>
+  </div>
+
+  <!-- 
+<p *ngIf="load_error" style="color: red">
+    There was a problem loading your product: {{ load_error.error }}
+</p>
+<form #productForm="ngForm">
+    <div class='cover-photo-holder'>
+        <div><img [src]="coverPhotoPath()"/></div>
+        <input type='file' (change)="readUrl($event)" />
+    </div>
+    <div class='newrecipe card'>
+        <h4 class='card-header'>Create new product</h4>
+        <div class='card-body'>
+            <div class='input-group'>
+                <input required type="text" class='form-control' [(ngModel)]="product.title"
+                    placeholder="Product Title" name="title" />
+            </div>
+            <div class='input-group'>
+                <textarea required class='form-control' [(ngModel)]="product.description" rows="5"
+                    placeholder="Description" name="description"></textarea>
+            </div>
+            <div class='input-group'>
+                <input required type="number" min="1'" class='form-control'
+                    [(ngModel)]="product.price" placeholder="Price"
+                    name="price" />
+            </div>
+            <div class='input-group'>
+                <input required type="number" min="1" max="1000" class='form-control'
+                    [(ngModel)]="product.category" placeholder="Category"
+                    name="category" />
+            </div>
+            <div class='input-group'>
+                <input required type="number" min="1'" class='form-control'
+                    [(ngModel)]="product.phone" placeholder="Phone"
+                    name="phone" />
+            </div>
+            <div>
+                <input type="button" class='btn btn-secondary' value="Add" (click)="addNewFieldPressed()" />
+            </div>
+
+            <img *ngIf="product.photo" [src]="productPath" />
+            <div class='form-row'>
+                <div class='form-group col-md-8'>
+                        <input type='file' (change)="PhotoUrl(i, $event)"/>
+                </div>
+            </div>
+            <div style='clear: both'></div>
+
+            <div class='add-form-button-holder input-group'>
+                <input type="button" [disabled]="!productForm.valid" class='btn btn-primary' value='Add Product'
+                    (click)="addProductClicked()" />
+            </div>
+        </div>
+    </div>
+</form>
+
+-->

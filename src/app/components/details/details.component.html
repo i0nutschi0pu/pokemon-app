@@ -1,0 +1,62 @@
+
+<!-- move inline css to file-->
+<div class="row" style="background-color: #333;">
+  <div class="col-lg-8">
+    <app-home></app-home>
+  </div>
+  <div class="col-lg-4">
+    <app-pokemon-search></app-pokemon-search>
+  </div>
+</div>
+<div *ngIf="pokemon">
+  <h2 class="text-center" style="background-color: {{pokemonColor}};">{{pokemon.name | uppercase}}</h2>
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div *ngFor="let type of pokemonTypes" class="box" style="background-color: {{pokemonColor}};">
+      <h3 class="col-lg-4">{{type.name | uppercase }} </h3>
+    </div>
+  </div>
+  <div>
+    <img src="{{pokemonImg}}" style="width:200px; height:100px;" />
+  </div>
+  <div *ngFor="let statistics of pokemonStatistics" class="box">
+    <div class="row">
+      <div class="col-lg-4">
+        <img src="" />
+      </div>
+      <div class="col-lg-4">
+        <h3 class="">{{statistics.name }} </h3>
+      </div>
+      <div class="col-lg-3">
+        <div class="progress">
+          <div class="progress-bar bg-success" role="progressbar" attr.style="width: {{statistics.base_stat}}%;"
+            attr.aria-valuenow=" {{statistics.base_stat}} " aria-valuemin="0" aria-valuemax="100">
+            {{statistics.base_stat}}%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h4 class="text-left" style="background-color: {{pokemonColor}};">Profile</h4>
+  <h2> {{pokemonType}} </h2>
+  <div class="row">
+    <div class="col-lg-6">
+      <h6>Height: {{pokemon.height}}</h6>
+      <h6>Catch rate</h6>
+      <h6>Egg groups</h6>
+      <h6>Abilities:
+
+        <span *ngFor="let ability of pokemonAbs" class="box">
+          <div style="width: 60%; margin: 0 auto; display: inline;" id="container"> {{ability.name}} - </div>
+        </span>
+      </h6>
+    </div>
+    <div class="col-lg-6">
+      <h6>Weight: {{pokemon.weight}} </h6>
+      <h6>Gender ration</h6>
+      <h6>Hatch steps</h6>
+      <h6>EVs</h6>
+    </div>
+  </div>
+  <h4 class="text-left" style="background-color: {{pokemonColor}};">Evolutions</h4>
+  <h4 class="text-left" style="background-color: {{pokemonColor}};">Damage when attacked</h4>
+  <button type="button" class="btn btn-primary" (click)="goBack()">go back</button>

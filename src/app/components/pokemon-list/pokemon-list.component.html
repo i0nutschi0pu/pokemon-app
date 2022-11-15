@@ -1,0 +1,24 @@
+
+<!-- move inline css to file-->
+<div class="row" style="background-color: #333;">
+  <div class="col-lg-8">
+    <app-home></app-home>
+  </div>
+  <div class="col-lg-4">
+    <app-pokemon-search></app-pokemon-search>
+  </div>
+</div>
+<div style="width: 60%;margin: 0 auto;">
+    <div class="row">
+      <div class="card-deck col-sm-3" style="padding: 20px 20px;"  *ngFor="let pokemon of pokemons">
+        <div class="card">
+          <img class="card-img-top" src="" alt="Card image cap">
+          <div class="card-body">
+            <a routerLink="/details/{{pokemon.id}}">
+              {{pokemon.name}}
+            </a>
+          </div>
+        </div>
+    </div>
+</div>
+

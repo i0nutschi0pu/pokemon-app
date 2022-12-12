@@ -1,65 +1,122 @@
-<div class="row" style="background-color: #333;">
+<div class="row gray-bck">
     <div class="col-lg-8">
       <app-home></app-home>
     </div>
     <div class="col-lg-4">
       <app-pokemon-search></app-pokemon-search>
     </div>
-  </div>
-
-  <!-- 
-<p *ngIf="load_error" style="color: red">
-    There was a problem loading your product: {{ load_error.error }}
-</p>
-<form #productForm="ngForm">
-    <div class='cover-photo-holder'>
-        <div><img [src]="coverPhotoPath()"/></div>
-        <input type='file' (change)="readUrl($event)" />
+</div>
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+                <form [formGroup]="productForm">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Name" formControlName="name" required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['name'].valid && (productForm.controls['name'].touched)">
+                      <div [hidden]="!productForm.controls['name'].errors">
+                        Name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" placeholder="Description" formControlName="desc" required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['desc'].valid && (productForm.controls['desc'].touched)">
+                      <div [hidden]="!productForm.controls['desc'].errors">
+                        Description is required.
+                      </div>
+                      <div [hidden]="!productForm.controls['desc'].errors">
+                        Description must be have 10 character length.
+                      </div>
+                      <div [hidden]="!productForm.controls['desc'].errors">
+                        Description must be have 1000 character length.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" class="form-control" placeholder="price" formControlName="price" required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['price'].valid && (productForm.controls['price'].touched)">
+                      <div [hidden]="!productForm.controls['price'].errors">
+                        Price is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-select form-control" aria-label="category" formControlName="category" required>
+                        <option selected>Category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Cloths">Cloths</option>
+                        <option value="Blankets">Blankets</option>
+                      </select>
+                    <div class="alert-danger" *ngIf="!productForm.controls['category'].valid && (productForm.controls['category'].touched)">
+                      <div [hidden]="!productForm.controls['category'].errors">
+                        Category is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Phone</label>
+                    <input type="number" class="form-control" placeholder="phone" formControlName="phone" required>
+                    <div class="alert-danger" *ngIf="!productForm.controls['phone'].valid && (productForm.controls['phone'].touched)">
+                      <div [hidden]="!productForm.controls['phone'].errors">
+                        Phone is required.
+                      </div>
+                      <div [hidden]="!productForm.controls['phone'].errors">
+                        Phone must be have 10 character length.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="file">File</label>
+                    <input formControlName="file" type="file" class="form-control" (change)="onFileChange($event)"  required>
+                 <!--    <small class="form-text text-danger" *ngIf="f.file.errors.required"> 
+                        Name is required</small>
+                 -->
+                    <div class="alert-danger" *ngIf="!productForm.controls['file'].valid && (productForm.controls['file'].touched)">
+                      <div [hidden]="!productForm.controls['file'].errors">
+                        Photo is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Select</label>
+                    <select class="form-select form-control" aria-label="select" formControlName="select" required>
+                        <option selected>Select</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="LandLine">LandLine</option>
+                      </select>
+                    <div class="alert-danger" *ngIf="!productForm.controls['select'].valid && (productForm.controls['select'].touched)">
+                      <div [hidden]="!productForm.controls['select'].errors">
+                        Select is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                        <button  (click)="saveProduct(productForm.value)" type="submit" class="btn btn-large btn-success" [disabled]="!productForm.valid">Save</button>
+                    </div>
+                    <div class="col-lg-4">
+               <!--          <button (click)="loadData()" class="btn btn-success" >Load data</button> -->
+                    </div>
+                    <div class="col-lg-4">
+                        <button (click)="resetData()" class="btn btn-primary" >Reset</button>
+                    </div>
+                  </div>
+                  
+                </form>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="session">
+         <!--   {{session | json}} -->
+          <!--   <h1>name: {{session.name}} </h1> -->
+          </div>
     </div>
-    <div class='newrecipe card'>
-        <h4 class='card-header'>Create new product</h4>
-        <div class='card-body'>
-            <div class='input-group'>
-                <input required type="text" class='form-control' [(ngModel)]="product.title"
-                    placeholder="Product Title" name="title" />
-            </div>
-            <div class='input-group'>
-                <textarea required class='form-control' [(ngModel)]="product.description" rows="5"
-                    placeholder="Description" name="description"></textarea>
-            </div>
-            <div class='input-group'>
-                <input required type="number" min="1'" class='form-control'
-                    [(ngModel)]="product.price" placeholder="Price"
-                    name="price" />
-            </div>
-            <div class='input-group'>
-                <input required type="number" min="1" max="1000" class='form-control'
-                    [(ngModel)]="product.category" placeholder="Category"
-                    name="category" />
-            </div>
-            <div class='input-group'>
-                <input required type="number" min="1'" class='form-control'
-                    [(ngModel)]="product.phone" placeholder="Phone"
-                    name="phone" />
-            </div>
-            <div>
-                <input type="button" class='btn btn-secondary' value="Add" (click)="addNewFieldPressed()" />
-            </div>
-
-            <img *ngIf="product.photo" [src]="productPath" />
-            <div class='form-row'>
-                <div class='form-group col-md-8'>
-                        <input type='file' (change)="PhotoUrl(i, $event)"/>
-                </div>
-            </div>
-            <div style='clear: both'></div>
-
-            <div class='add-form-button-holder input-group'>
-                <input type="button" [disabled]="!productForm.valid" class='btn btn-primary' value='Add Product'
-                    (click)="addProductClicked()" />
-            </div>
-        </div>
-    </div>
-</form>
-
--->
+    <div class="col-lg-4"></div>
+</div>

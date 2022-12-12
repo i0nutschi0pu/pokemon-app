@@ -43,7 +43,7 @@ export class DetailsComponent implements OnInit {
       .subscribe( (pokemon) => { 
 
        this.pokemon = pokemon;
-       console.log(pokemon)
+      // console.log(pokemon)
      });
   }
 

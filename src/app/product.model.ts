@@ -17,4 +17,8 @@ export class Product {
         this.photo = photo;
         this.phone = phone;
     }
+
+    public static createBlank(): Product {
+        return new Product(-1, '', '', '', 1, '', 1);
+    }
 }

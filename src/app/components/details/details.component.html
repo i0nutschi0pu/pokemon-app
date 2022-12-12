@@ -1,6 +1,6 @@
 
 <!-- move inline css to file-->
-<div class="row" style="background-color: #333;">
+<div id="pokemon-details" class="row gray-bck">
   <div class="col-lg-8">
     <app-home></app-home>
   </div>
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div>
-    <img src="{{pokemonImg}}" style="width:200px; height:100px;" />
+    <img src="{{pokemonImg}}" class="imgWH" />
   </div>
   <div *ngFor="let statistics of pokemonStatistics" class="box">
     <div class="row">
@@ -46,7 +46,7 @@
       <h6>Abilities:
 
         <span *ngFor="let ability of pokemonAbs" class="box">
-          <div style="width: 60%; margin: 0 auto; display: inline;" id="container"> {{ability.name}} - </div>
+          <div class="center-display" id="container"> {{ability.name}} - </div>
         </span>
       </h6>
     </div>

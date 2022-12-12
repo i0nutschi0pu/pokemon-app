@@ -1,6 +1,5 @@
 
-<!-- move inline css to file-->
-<div class="row" style="background-color: #333;">
+<div id="pokemons-list" class="row gray-bck">
   <div class="col-lg-8">
     <app-home></app-home>
   </div>
@@ -8,17 +7,36 @@
     <app-pokemon-search></app-pokemon-search>
   </div>
 </div>
-<div style="width: 60%;margin: 0 auto;">
+<!-- {{pokemons | json}} -->
+<div class="pad-top"></div>
+<div class="centerCustom">
     <div class="row">
-      <div class="card-deck col-sm-3" style="padding: 20px 20px;"  *ngFor="let pokemon of pokemons">
+      <div class="pad-bottom card-deck col-sm-3 pad20"  *ngFor="let pokemon of pokemons">
         <div class="card">
-          <img class="card-img-top" src="" alt="Card image cap">
+          <img class="card-img-top" src="{{pokemon.sprites}}" alt="Card image cap">
           <div class="card-body">
             <a routerLink="/details/{{pokemon.id}}">
               {{pokemon.name}}
             </a>
           </div>
         </div>
+      </div>
     </div>
+</div>
+<div class="pad-top"></div>
+<div class="row">
+  <div class="col-lg-8"></div>
+  <div class="col-lg-4">
+    <div class="row">
+      <div class="col-lg-4"> 
+          <button  [disabled]="!previousButton" class="btn btn-primary btn-lg">Prev</button>
+      </div>
+      <div class="col-lg-4">
+          <button type="button" id="next-btn" value="{{nextButton}}" (click)="goToNextSetOfResults()"
+          [disabled]="!nextButton" class="btn btn-primary btn-lg">
+            Next
+          </button>
+      </div>
+  </div>
 </div>
 

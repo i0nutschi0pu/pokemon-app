@@ -1,4 +1,6 @@
 export interface Pokemon {
+    next: any;
+    previous: any;
     results: Pokemon[];
 }
 
@@ -17,6 +19,12 @@ export interface Pokemon {
     stats: [];
     ability: string;
     sprites: {back_default: any};
-} 
+}
+
+
+export interface Pokemons {
+    count: number;
+}
+
 
 

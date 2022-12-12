@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonCRUDService } from '../../pokemon-crud.service';
 import { Pokemon } from '../../pokemon.model';
+import { ActivatedRoute } from '@angular/router';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -16,20 +14,41 @@ export class PokemonListComponent implements OnInit {
 
   
   pokemons: Pokemon[] = [];
+  pokemonImg!: string;
+  public previousButton: any;
+  public nextButton: any;
   
 
-  constructor(private pokemonCrudService: PokemonCRUDService, private http: HttpClient) { }
+  constructor(private pokemonCrudService: PokemonCRUDService, private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
-   //  this.showPokemons();
      this.showPokemonsWithId();
-    // this.pokemonCrudService.getPokemonImage();
+     this.getNavigationButtons('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20');
 }
 
-  showPokemonsWithId() {
+  showPokemonsWithId() 
+  {
     if(!this.pokemons.length){
-      this.pokemons  = this.pokemonCrudService.getPokemonImage();
+      this.pokemons  = this.pokemonCrudService.getPokemonImage(null);
     }
   }
+
+  getNavigationButtons(url: string)
+  {
+    this.pokemonCrudService.getPokemons(url).subscribe(
+      (response) => {
+        this.previousButton = response.previous;
+        this.nextButton = response.next;
+      }
+    )
+  }
+
+  goToNextSetOfResults()
+  {
+    let nextButton = (document.getElementById('next-btn') as HTMLButtonElement).value;
+    this.getNavigationButtons(nextButton);
+    this.pokemonCrudService.getPokemonImage(nextButton);
+  }
+
 }

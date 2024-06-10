@@ -1,0 +1,132 @@
+<div id="pokemon-details" class="row gray-bck">
+  <div class="col-lg-8">
+    <app-menu></app-menu>
+  </div>
+  <div class="col-lg-4">
+    <app-pokemon-search></app-pokemon-search>
+  </div>
+</div>
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+                <div [formGroup]="productForm">
+                  <div formArrayName="items">
+                    <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+                      <!-- <h1>{{item.controls.name.valid}}</h1> -->
+                      <h1>Product Form</h1>
+                      <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" placeholder="Enter Name" formControlName="name" required>
+                        <div class="alert-danger" *ngIf="!item.controls.name.valid && (item.controls.name.touched)">
+                          <div [hidden]="!item.controls.name.errors">
+                            Name is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" placeholder="Description" formControlName="desc" required>
+                        <div class="alert-danger" *ngIf="!item.controls.desc.valid && (item.controls.desc.touched)">
+                          <div [hidden]="!item.controls.desc.errors">
+                            Description is required.
+                          </div>
+                          <div [hidden]="!item.controls.desc.errors">
+                            Description must be have 10 character length.
+                          </div>
+                          <div [hidden]="!item.controls.desc.errors">
+                            Description must be have 1000 character length.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" class="form-control" placeholder="price" formControlName="price" required>
+                        <div class="alert-danger" *ngIf="!item.controls.price.valid && (item.controls.price.touched)">
+                          <div [hidden]="!item.controls.price.errors">
+                            Price is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-select form-control" aria-label="category" formControlName="category" required>
+                            <option selected>Category</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Cloths">Cloths</option>
+                            <option value="Blankets">Blankets</option>
+                          </select>
+                        <div class="alert-danger" *ngIf="!item.controls.category.valid && (item.controls.category.touched)">
+                          <div [hidden]="!item.controls.category.errors">
+                            Category is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Phone</label>
+                        <input type="number" class="form-control" placeholder="phone" formControlName="phone" required>
+                        <div class="alert-danger" *ngIf="!item.controls.phone.valid && (item.controls.phone.touched)">
+                          <div [hidden]="!item.controls.phone.errors">
+                            Phone is required.
+                          </div>
+                          <div [hidden]="!item.controls.phone.errors">
+                            Phone must be have 10 character length.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="imageUrl">Image URL</label>
+                        <input formControlName="imageUrl" type="text" class="form-control" required>
+                        <div class="alert-danger" *ngIf="!item.controls.imageUrl.valid && (item.controls.imageUrl.touched)">
+                          <div [hidden]="!item.controls.imageUrl.errors">
+                            Photo is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Select</label>
+                        <select class="form-select form-control" aria-label="select" formControlName="select" required>
+                            <option selected>Select</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="LandLine">LandLine</option>
+                        </select>
+                        <div class="alert-danger" *ngIf="!item.controls.select.valid && (item.controls.select.touched)">
+                          <div [hidden]="!item.controls.select.errors">
+                            Select is required.
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-1">
+                        <!-- <button  (click)="saveProduct(productForm.value)" type="submit" class="btn col-12 btn-large btn-success" 
+                          [disabled]="!productForm.valid">
+                          Save
+                        </button> -->
+                    </div>
+                    <div class="col-lg-3">
+                      <button (click)="submit()" class="btn btn-large col-12 btn-success" [disabled]="!productForm.valid"> submit </button>
+                    </div>
+                    <div class="col-lg-3">
+                      <button (click)="addItem()" class="btn btn-large col-12 btn-dark"> add + </button>
+                    </div>
+                    <div class="col-lg-3">
+                        <button (click)="resetData()" class="btn btn-large col-12 btn-primary" >Reset</button>
+                    </div>
+                    <div class="col-lg-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="session">
+          <!--   {{session | json}} -->
+          <!--   <h1>name: {{session.name}} </h1> -->
+          </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>

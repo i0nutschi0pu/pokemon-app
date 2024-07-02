@@ -18,6 +18,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpRequestInterceptor } from './service/request-interceptor';
 import { HasProductsGuard } from './guards/hasProducts.guards';
+import { Page404Component } from './components/page404/page404.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { HasProductsGuard } from './guards/hasProducts.guards';
     CreateProductComponent,
     ListProductsComponent,
     MenuComponent,
+    Page404Component,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { HasProductsGuard } from './guards/hasProducts.guards';
         path: '',
         redirectTo: '/pokemons',
         pathMatch: 'full'
-      }
+      },
+      {path:'**', component: Page404Component}
     ])
   ],
   exports: [RouterModule],

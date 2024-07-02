@@ -3,7 +3,7 @@
 }
 
 .imgWH{
-    width:200px; height:100px;
+    width:140px; height:129px;
 }
 
 .center-display{
@@ -14,6 +14,90 @@
     background-color: #333 !important;
 }
 
+.bckaqua{
+    background-color: aqua;
+}
+
+.bckblack{
+    background-color: black;
+}
+
+.bckblue{
+    background-color: blue;
+}
+
+.bckfuchsia{
+    background-color: fuchsia;
+}
+
+.bckgray{
+    background-color: gray;
+}
+
+.bckgreen{
+    background-color: green;
+}
+
+.bcklime{
+    background-color: lime;
+}
+
+.bckmaroon{
+    background-color: maroon;
+}
+
+.bcknavy{
+    background-color: navy;
+}
+
+.bckolive{
+    background-color: olive;
+}
+
+.bckorange{
+    background-color: orange;
+}
+
+.bckpurple{
+    background-color: purple;
+}
+
+.bckred{
+    background-color: red;
+}
+
+.bcksilver{
+    background-color: silver;
+}
+
+.bckteal{
+    background-color: teal;
+}
+
+.bckbeige{
+    background-color: beige;
+}
+
+.bckyellow{
+    background-color: yellow;
+}
+
+.bckbrown{
+    background-color: brown;
+}
+
+.bckmagenta{
+    background-color: magenta;
+}
+
+.bckkaki{
+    background-color: Khaki;
+}
+
 .media{
     display: block !important;
+}
+
+.mtop{
+    margin-top: -30px;
 }

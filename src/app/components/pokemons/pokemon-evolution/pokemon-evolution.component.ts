@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon, PokemonEvolution } from '../../../pokemon.model';
 import { ActivatedRoute } from '@angular/router';
-import { PokemonCRUDService } from '../../../pokemon-crud.service';
-import { Observable, Subject } from 'rxjs';
+import { PokemonFilteredSearchService } from 'src/app/service/pokemon-filtered-search.service';
+import { HelperService } from 'src/app/service/helper.service';
 
 @Component({
   selector: 'app-pokemon-evolution',
@@ -11,224 +10,94 @@ import { Observable, Subject } from 'rxjs';
 })
 export class PokemonEvolutionComponent implements OnInit {
 
-  pokemonName!: string
-  pokemonEvolution!: PokemonEvolution;
-  pokemonImg!: string;
-  pokemonEvolutionImg!: string;
-  evolutionLevel!: 
-  { evolves_to: 
-    [ 
-      { evolution_details: 
-        [
-          {min_level:  number;}
-        ], 
-        evolves_to: 
-        [
-          {species: {name: string}} 
-        ]
+  private pokemonEvolutionImg?: string;
+  private currentSpecie?: string;
+  private firstEvolutionSpecie?: string;
+  private secondEvolutionSpecie?: string;
+
+  evolutionLevel?: 
+  {
+    evolves_to: [
+      {
+        evolution_details: [
+          { min_level: number; }
+        ];
+        evolves_to: [
+          { species: { name: string; }; }
+        ];
       }
-    ], 
-    species: {name: string} 
+    ];
+    species: { name: string; };
   };
-  evolves_to!: string | null;
-  pokemonNameEvolution!: string;
-  pokemonEvolutionId!: number;
-  evolutionSpecieId!: number;
-  currentSpecie!: string;
-  firstEvolutionSpecie!: string;
-  secondEvolutionSpecie!: string;
-  noPossibleEvolution!: string;
+
+  noPossibleEvolution?: string;
+  pokemonImg?: string;
+  evolves_to?: string;
 
 
   constructor(
     private route: ActivatedRoute,
-    private pokemonService: PokemonCRUDService,
+    private pokemonService: PokemonFilteredSearchService,
+    private helperService: HelperService
   ) {}
 
   ngOnInit(): void {
-   
-      // this.getPokemonImg(this.getPokemonId());
-      // this.getPokemonEvolutionId().subscribe((r) => {
-      //   Number(r);
-      //   this.getPokemonEvolution(r);
-      //   }
-      // )
 
-
-
-      // this.getPokemonEvolutionId().subscribe((r) => 
-      //   {
-      //     Number(r);
-      //     this.getPokemonEvolution(r).subscribe((response: any) => {
-      //       this.getPokemonImg(response);
-      //     })
-          
-      //   }
-      // );
-      // console.log(this.getPokemonId());
-
-      this.pokemonService.getPokemonSpecie(this.getPokemonId()).subscribe(
+      this.pokemonService.getPokemonSpecie(this.helperService.getPokemonId(this.route.snapshot.paramMap.get('id')!)).subscribe(
         response => {
-          this.getPokemonEvolution(response, this.getPokemonId());
+          this.getPokemonEvolution(response, this.helperService.getPokemonId(this.route.snapshot.paramMap.get('id')!));
         }
       );
-
-      // this.pokemonService.getPokemonSpecie(this.getPokemonId()).subscribe(
-      //   response => {
-      //     this.getPokemonEvolution(response).subscribe((data: any) => {
-      //       this.getPokemonImg(data);
-      //     })
-          
-      //   }
-      // );
-      
-    
-    
-
-    
-
-
-    // this.getPokemonEvolutionId().subscribe((r)=>r);
-    // console.log(Number(this.getPokemonEvolutionId().subscribe( (r)=> r ) ) );
-    // console.log(parseInt(this.getPokemonEvolutionId().subscribe((r) => r) as unknown as string));
-
-     
   }
 
-  getPokemonId(): number
+  getPokemonImg(id: number): string
   {
-    return parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+    return this.pokemonImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
   }
 
-  getPokemonEvolutionId()
+  getPokemonEvolution(id: number, pokemonId: number): void
   {
-    var subject = new Subject<number>();
-    let pokemonEvolutionId: number;
-
-    this.pokemonService.getPokemonSpecie(this.getPokemonId()).subscribe(
-      response => {
-        // console.log(response);
-
-        pokemonEvolutionId =  Number(response.evolution_chain.url.split('/')[response.evolution_chain.url.split('/').length - 2]);
-        subject.next(pokemonEvolutionId);
-      }
-    );
-
-    return subject.asObservable();
-  }
-
-  // getPokemonEvolutionId()
-  // {
-  //   var subject = new Subject<number>();
-  //   let pokemonEvolutionId: number;
-
-  //   this.pokemonService.getPokemonSpecie(this.getPokemonId()).subscribe(
-  //     response => {
-
-  //       pokemonEvolutionId =  Number(response.evolution_chain.url.split('/')[response.evolution_chain.url.split('/').length - 2]);
-  //       subject.next(pokemonEvolutionId);
-  //     }
-  //   );
-
-  //   return subject.asObservable();
-  // }
-
-  getPokemonImg(Id: number): any
-  {
-
-    var subject = new Subject<string>();
-    let pokemonNameEvolution: string;
-
-    this.pokemonService.getPokemon(Id).subscribe(
-      response => {
-        pokemonNameEvolution = response.name;
-        subject.next(pokemonNameEvolution);
-        // this.pokemonEvolution = pokemonEvolution;
-        this.pokemonName = response.name;
-
-        for (const [k, v] of Object.entries(response.sprites)) {
-          if (k === 'front_default') {
-            return this.pokemonImg = v;
-          }
-
-          
-        }
-      }
-    );
-
-    return subject.asObservable();
-  }
-
-  // getPokemonEvolution()
-  // {
-  //   this.pokemonService.getEvolutionDetails(this.getPokemonId())
-  //     .subscribe( (pokemonEvolution) => { 
-
-  //      this.pokemonEvolution = pokemonEvolution;
-  //     // console.log(pokemon)
-  //    });
-  // }
-
-  getPokemonEvolution(id: any, pokemonId: number): any
-  {
-    // var subject = new Subject<number>();
     let pokemonNameEvolutionId: number;
     let secondEvolutionSpecieId: number;
     let firstEvolutionSpecieId: number;
 
-    let level = 1;
     this.pokemonService.getEvolutionDetails(id)
       .subscribe( (pokemonEvolution)  => {
         this.currentSpecie = pokemonEvolution.chain.species.name;
-        // console.log(this.currentSpecie );
 
-        pokemonEvolution.chain.evolves_to.forEach( (lists: any) => {
-          lists.evolves_to.forEach( (evols: any) => { // second evolution
-            // console.log(evols );
-            pokemonNameEvolutionId = Number(evols['species']['url'].split('/')[evols['species']['url'].split('/').length - 2]);
-            this.pokemonEvolutionImg = this.getPokemonImg(pokemonNameEvolutionId);
+        pokemonEvolution.chain.evolves_to.forEach( (evolutionDetails: any) => {
+          evolutionDetails.evolves_to.forEach( (evolvesToDetails: any) => { 
+
+            pokemonNameEvolutionId = this.helperService.stringExtract(evolvesToDetails['species']['url']);
             secondEvolutionSpecieId = pokemonNameEvolutionId;
-            // subject.next(pokemonNameEvolutionId);
-            this.secondEvolutionSpecie = evols['species']['name'];
-            // console.log(secondEvolutionSpecieId);
+            this.secondEvolutionSpecie = evolvesToDetails['species']['name'];
           
           });
 
           // first evolution
-          pokemonNameEvolutionId =  Number(lists['species']['url'].split('/')[lists['species']['url'].split('/').length - 2]);
-          this.pokemonEvolutionImg = this.getPokemonImg(pokemonNameEvolutionId)
-          // subject.next(pokemonNameEvolutionId);
-          this.firstEvolutionSpecie = lists['species']['name'];
+          pokemonNameEvolutionId = this.helperService.stringExtract(evolutionDetails['species']['url']);
+          this.firstEvolutionSpecie = evolutionDetails['species']['name'];
           firstEvolutionSpecieId = pokemonNameEvolutionId;
-          // console.log(firstEvolutionSpecieId);
         });
-
-        // console.log(this.firstEvolutionSpecie );
-        // console.log(this.secondEvolutionSpecie );
         
         if(pokemonId === firstEvolutionSpecieId) {
           this.evolves_to = this.secondEvolutionSpecie;
+          this.pokemonEvolutionImg = this.getPokemonImg(secondEvolutionSpecieId);
         }else if(pokemonId === secondEvolutionSpecieId){
-          this.evolves_to = null;
-          this.noPossibleEvolution = 'There is no evolution possible';
+          this.evolves_to = '';
+          this.noPossibleEvolution = 'There is no possible evolution';
         }
         else{
           this.evolves_to = this.firstEvolutionSpecie;
+          this.pokemonEvolutionImg = this.getPokemonImg(firstEvolutionSpecieId);
         }
 
-        // this.evolves_to = pokemonEvolution.chain.evolves_to.species.name;
-
-
-        pokemonEvolution.chain.evolves_to.forEach( (items: {evolution_details: any, }) => {
-          // console.log(items.evolution_details);
+        pokemonEvolution.chain.evolves_to.forEach( (items: {evolution_details: any }) => {
           items.evolution_details.forEach( (details: {min_level: any}) => {
-            // console.log(details.min_level);
             this.evolutionLevel = details.min_level;
           });
       });
      });
-
-    //  console.log(subject.asObservable());
   }
 
 }

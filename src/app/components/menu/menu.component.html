@@ -1,37 +1,11 @@
 <div class="navbar">
-    <a routerLink="/pokemon" routerLinkActive="active">Pokemon</a>
-    <!-- <a routerLink="/details/4" routerLinkActive="active">Details</a> -->
-    <!-- <a [routerLink]="'/details/'[id]" routerLinkActive="active">Details</a> -->
+    <a routerLink="/pokemons" routerLinkActive="active">Pokemons</a>
     <span *ngIf="id">
        <a [routerLink] = "['/details', id]" routerLinkActive="active">Details</a>
     </span>
-    <!-- <a [routerLink] = "['/details', id]" routerLinkActive="active">Details</a> -->
     <span *ngIf="isAdmin">
           <a routerLink="/create-product" routerLinkActive="active">Create Product</a>
           <a routerLink="/products" routerLinkActive="active">Products</a>
-          <!-- <a routerLink="/products-list" routerLinkActive="active">Product List</a> -->
     </span>
-    <!-- 
-      <div class="dropdown">
-          <button class="dropbtn">Details 
-          <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content">
-          
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-          </div>
-      </div>
-      -->
-
-
-<!--
-    <form class="example" action="" 
-          style="float: right; margin:auto; max-width:300px">
-      <input  type="text" placeholder="Search Pokemon" name="search2">
-    </form>
-  -->
-
 </div>
   

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonCRUDService } from '../../../pokemon-crud.service';
+import { PokemonFilteredSearchService } from 'src/app/service/pokemon-filtered-search.service';
 
 @Component({
   selector: 'app-pokemon-search',
@@ -9,19 +9,18 @@ import { PokemonCRUDService } from '../../../pokemon-crud.service';
 export class PokemonSearchComponent implements OnInit {
 
   errors: string[] = [];
-  constructor(private pokemonCRUDService: PokemonCRUDService) {}
+  
+  constructor(private pokemonService: PokemonFilteredSearchService) {}
 
-  search(term: any): void {
+  search(term: string | number): void {
     let searchTerm = (document.getElementById("search-box") as HTMLInputElement).value;
-    this.pokemonCRUDService.getSearchedPokemon(searchTerm);
+    this.pokemonService.getSearchedPokemon(searchTerm);
   }
 
-  // onEnter(term: string): void {
-  //   this.searchTerms.next(term);
-  // }
-
-  handleSubmit(e: any, term: any){
+  handleSubmit(e: any, term: string | number): void
+  {
     e.preventDefault();
+    this.errors = [];
     
     if(typeof term  === 'string'){
       if(term.length < 3){
@@ -31,7 +30,7 @@ export class PokemonSearchComponent implements OnInit {
       }
     }
 
-    if(typeof term  === 'number'){
+    if(isNaN(Number(term)) === false){
         this.errors.push(
           'Numeric characters are not allowed',
         );
@@ -42,7 +41,8 @@ export class PokemonSearchComponent implements OnInit {
     }
   }
 
-  handleKeyUp(e: any, term: any){
+  handleKeyUp(e: any, term: string | number)
+  {
    
      if(e.keyCode === 13){
         this.handleSubmit(e, term);
@@ -50,20 +50,5 @@ export class PokemonSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.pokemons$ = this.searchTerms.pipe(
-    //   // wait 300ms after each keystroke before considering the term
-    //   debounceTime(300),
-
-    //   // ignore new term if same as previous term
-    //   distinctUntilChanged(),
-
-    //   // switch to new search observable each time the term changes
-    //   switchMap((term: string) => this.pokemonCRUDService.searchPokemons(term)),
   }
-
-
-
-          
-          
-
 }

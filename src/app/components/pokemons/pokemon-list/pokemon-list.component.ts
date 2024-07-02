@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonCRUDService } from '../../../pokemon-crud.service';
-import { Pokemon } from '../../../pokemon.model';
-import { ActivatedRoute } from '@angular/router';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { PokemonFilteredSearchService } from 'src/app/service/pokemon-filtered-search.service'; 
+import { Pokemon } from '../../../model/pokemon.interfaces';
+import { POKEMONS_URL } from 'src/app/constants';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -12,31 +10,31 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PokemonListComponent implements OnInit {
 
-  
   pokemons: Pokemon[] = [];
-  pokemonImg!: string;
-  public previousButton: any;
-  public nextButton: any;
+  previousButton?: string;
+  nextButton?: string;
   
 
-  constructor(private pokemonCrudService: PokemonCRUDService, private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(
+    private pokemonService: PokemonFilteredSearchService, 
+  ) { }
 
   ngOnInit(): void {
 
-     this.showPokemonsWithId();
-     this.getNavigationButtons('https://pokeapi.co/api/v2/pokemon?offset=0&limit=30');
-}
+     this.getPokemons();
+     this.getNavigationButtons(POKEMONS_URL);
+  }
 
-  showPokemonsWithId() 
+  getPokemons(): void
   {
     if(!this.pokemons.length){
-      this.pokemons  = this.pokemonCrudService.getPokemonImage(null);
+      this.pokemons  = this.pokemonService.getPokemonsDetails(null);
     }
   }
 
-  getNavigationButtons(url: string)
+  getNavigationButtons(url: string): void
   {
-    this.pokemonCrudService.getPokemons(url).subscribe(
+    this.pokemonService.getPokemons(url).subscribe(
       (response) => {
         this.previousButton = response.previous;
         this.nextButton = response.next;
@@ -44,11 +42,11 @@ export class PokemonListComponent implements OnInit {
     )
   }
 
-  goToNextSetOfResults()
+  goToNextSetOfResults(): void
   {
     let nextButton = (document.getElementById('next-btn') as HTMLButtonElement).value;
     this.getNavigationButtons(nextButton);
-    this.pokemonCrudService.getPokemonImage(nextButton);
+    this.pokemonService.getPokemonsDetails(nextButton);
   }
 
 }

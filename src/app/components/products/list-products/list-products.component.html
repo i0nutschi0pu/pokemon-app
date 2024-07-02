@@ -2,24 +2,23 @@
     <div class="col-lg-8">
       <app-menu></app-menu>
     </div>
-      <div class="col-lg-4">
-        <app-pokemon-search></app-pokemon-search>
-      </div>
-  </div>
-  <!-- {{session | json}} -->
-  <div class="row">
-      <div class="col-lg-4"></div>
-      <div class="col-lg-5">
-        <h2>  Products list: </h2>
-        <div class="row">
-          <div class="card-deck col-sm-3 pad20"  *ngFor="let product of session">
-            <div class="card">
-              <img class="card-img-top" [src]="product.imageUrl" alt="Card image cap">
-              <div class="card-body">
-                  <span>Name: {{product.name}} </span>
-              </div>
+    <div class="col-lg-4">
+      <app-pokemon-search></app-pokemon-search>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-5">
+      <h2>  Products list: </h2>
+      <div class="row">
+        <div class="card-deck col-sm-3 pad20"  *ngFor="let product of productDetails">
+          <div class="card">
+            <img class="card-img-top" [src]="product.imageUrl" alt="Card image cap">
+            <div class="card-body">
+                <span>Name: {{product.name}} </span>
             </div>
-        </div>
+          </div>
       </div>
-      <div class="col-lg-2"></div>
-  </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>

@@ -12,8 +12,6 @@ export class HasProductsGuard implements CanActivate {
         state: RouterStateSnapshot
         ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> 
         {        
-            // localStorage.clear();
             return localStorage.getItem('product') ? true : false;
         }
-    
 }

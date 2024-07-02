@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
-import { PokemonCRUDService } from 'src/app/pokemon-crud.service';
-import { Pokemon } from 'src/app/pokemon.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, Subject } from 'rxjs';
+import { PokemonFilteredSearchService } from 'src/app/service/pokemon-filtered-search.service';
+import { Pokemon } from 'src/app/model/pokemon.interfaces';
+import { forkJoin} from 'rxjs';
+import { HelperService } from 'src/app/service/helper.service'; 
 
 @Component({
   selector: 'app-pokemon-damage',
@@ -13,191 +12,73 @@ import { map, Subject } from 'rxjs';
 })
 export class PokemonDamageComponent implements OnInit {
 
-  pokemon!: Pokemon
-  evolves_to!: string;
-  moves!: [move: {url: string}];
-  statusDamageMoves!: [{url: string}];
-  physicalDamageMoves!: [{url: string}];
-  specialDamageMoves!: [{url: string}];
-  special!: string;
-  physical!: string;
-  status!: string;
-
+  private pokemon?: Pokemon;
+  isSpecial: boolean = false;
+  isPhysical: boolean = false;
+  isStatus: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private pokemonService: PokemonCRUDService,
+    private pokemonService: PokemonFilteredSearchService,
+    private helperService: HelperService,
   ) {}
 
   ngOnInit(): void {
      this.getPokemonMoves();
-     this.getMovesForStatusDamageClass();
-     this.getMovesForSpecialDamageClass();
-    //  console.log(this.getMovesForSpecialDamageClassF());
-    //  this.getMovesForSpecialDamageClassF().subscribe((r)=>console.log(r));
-    //  this.getMovesForSpecialDamageClassF().subscribe((r)=> r);
-    //  this.getarray();
-    //  console.log(this.pokemonService.getTotalNumberOfPokemons());
   }
 
-
-  getPokemonId(): number
+  getPokemonMoves(): void
   {
-    return parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-  }
+    let currentPokemonMovesIds: number[]=[];
+    let specialDamageMovesIds: number[]=[];
+    let physicalDamageMovesIds: number[]=[];
+    let statusDamageMovesIds: number[]=[];
 
-  getPokemonMovesF() 
-  {
-
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    var subject = new Subject<any>();
-    let thingsArray: number[]=[];
-    this.pokemonService.getPokemon(id)
-    .subscribe( (pokemon) => { 
-
-        pokemon.moves.forEach( (urls: any) => {
-          // totalQuestions=moves.url;
-          // console.log(totalQuestions);
-          thingsArray.push(Number(urls.move.url.split('/')[urls.move.url.split('/').length - 2]));
-          
-      });
-      subject.next(thingsArray);
-    //  console.log(this.pokemon.moves);
-   });
-   
-    
-    return subject.asObservable();
-  }
-
-  getPokemonMoves() 
-  {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-
-    this.pokemonService.getPokemon(id)
-      .subscribe( (pokemon) => { 
-       this.pokemon = pokemon;
-
-       pokemon.moves.forEach( (urls: any) => {
-        // console.log(lists['species']['name']);
-        // this.moves = urls.move.url;
-
-        // this.moves.push(urls.move.url);
-
-        // console.log(urls.move.url);
-        // console.log(Number(urls.move.url.split('/')[urls.move.url.split('/').length - 2]));
-      });
-
-      //  console.log(this.pokemon.moves);
-     });
-  }
-
-  getMovesForStatusDamageClass()
-  {
-      var subject = new Subject<any>();
-      let thingsArray: number[]=[];
+    forkJoin([
+      this.pokemonService.getPokemon(this.helperService.getPokemonId(this.route.snapshot.paramMap.get('id')!)),
+      this.pokemonService.getMovesForSpecialDamageClass(),
+      this.pokemonService.getMovesForPhysicalDamageClass(),
       this.pokemonService.getMovesForStatusDamageClass()
-      .subscribe( (damage) => { 
+    ]).subscribe((res: any) => {
 
-        damage.moves.forEach( (moves: any) => {
-          // totalQuestions=moves.url;
-          // console.log(totalQuestions);
-          thingsArray.push(Number(moves.url.split('/')[moves.url.split('/').length - 2]));
-          
-      });
-      subject.next(thingsArray);
-      //  console.log(this.pokemon.moves);
-    });
+        this.pokemon = res[0];
 
-    this.getPokemonMovesF().subscribe((r)=> 
-      
-        r.forEach( (moves: any) => {
-          if(thingsArray.includes(moves)){
-            this.status =  'status';
-            return this.status;
-          }
-        })
-      );
-     
-    return subject.asObservable();
-  }
-
-  getMovesForPhysicalDamageClass()
-  {
-    var subject = new Subject<any>();
-    let thingsArray: number[]=[];
-    this.pokemonService.getMovesForPhysicalDamageClass()
-      .subscribe( (damage) => { 
-
-        damage.moves.forEach( (moves: any) => {
-          // totalQuestions=moves.url;
-          // console.log(totalQuestions);
-          thingsArray.push(Number(moves.url.split('/')[moves.url.split('/').length - 2]));
-          
-      });
-      subject.next(thingsArray);
-      //  console.log(this.pokemon.moves);
-     });
-
-     this.getPokemonMovesF().subscribe((r)=> 
-      
-        r.forEach( (moves: any) => {
-          if(thingsArray.includes(moves)){
-            this.physical =  'physical';
-            console.log(this.physical);
-            return this.physical;
-          }
-        })
-      );
-     
-    return subject.asObservable();
-  }
-
-  // getMovesForSpecialDamageClass()
-  // {
-  //   let results =  this.pokemonService.getMovesForSpecialDamageClass()
-  //     .subscribe( (damage) => { 
-
-  //       damage.moves.forEach( (moves: any) => {
-  //         // console.log(lists['species']['name']);
-  //         this.moves = moves.url;
-
-  //         // this.statusDamageMoves.push(moves.url);
-  //         // console.log(urls.move.url);
-  //         // console.log(Number(moves.url.split('/')[moves.url.split('/').length - 2]));
-  //       });
-  //     //  console.log(this.pokemon.moves);
-  //    });
-  //    return this.moves;
-  // }
-
-  getMovesForSpecialDamageClass()
-  {
-      var subject = new Subject<any>();
-      let thingsArray: number[]=[];
-      this.pokemonService.getMovesForSpecialDamageClass()
-      .subscribe( (damage) => { 
-
-          damage.moves.forEach( (moves: any) => {
-            // totalQuestions=moves.url;
-            // console.log(totalQuestions);
-            thingsArray.push(Number(moves.url.split('/')[moves.url.split('/').length - 2]));
-            
+        res[0].moves.forEach( (moves: any) => {
+          currentPokemonMovesIds.push(this.helperService.stringExtract(moves.move.url));
         });
-        subject.next(thingsArray);
-      
-     });
 
-      this.getPokemonMovesF().subscribe((r)=> 
-      
-        r.forEach( (moves: any) => {
-          if(thingsArray.includes(moves)){
-            this.special =  'special';
-            return this.special;
+        res[1].moves.forEach( (moves: any) => {
+          specialDamageMovesIds.push(this.helperService.stringExtract(moves.url));
+        });
+
+        res[2].moves.forEach( (moves: any) => {
+          physicalDamageMovesIds.push(this.helperService.stringExtract(moves.url));
+        });
+
+        res[3].moves.forEach( (moves: any) => {
+          statusDamageMovesIds.push(this.helperService.stringExtract(moves.url));
+        });
+        
+        currentPokemonMovesIds.forEach( (moves: any) => {
+
+          if(specialDamageMovesIds.includes(moves)){
+            this.isSpecial =  true;
+            return;
+          }
+  
+          if(physicalDamageMovesIds.includes(moves)){
+            this.isPhysical =  true;
+            return;
+          }
+  
+          if(statusDamageMovesIds.includes(moves)){
+            this.isStatus =  true;
+            return;
           }
         })
-      );
-     
-    return subject.asObservable();
+      
+      });
   }
 
 }
+

@@ -1,16 +1,17 @@
-<!-- <p>{{pokemonEvolution | json}}</p> -->
-<!-- <h5 class="pl-5">{{pokemonEvolution.id}} evolves into  at </h5> -->
-<!-- <h5 class="pl-5">{{pokemonEvolution.chain.evolves_to.evolution_details.min_level}} evolves into  at </h5> -->
 
 <div *ngIf="noPossibleEvolution">
-    <h5 class="text-left"> {{noPossibleEvolution}} </h5>
-</div>
-<div class="row" *ngIf="!noPossibleEvolution">
-    <h5 class="text-center col-12"> evolves into {{evolves_to | uppercase}} at level {{evolutionLevel}}</h5>
-    <div>
-        <img src="{{pokemonImg}}" class="pt-4" />
+    <div class="col-12 pt-7">
+        <h5 class="text-left"> {{noPossibleEvolution}} </h5>
     </div>
 </div>
-
-
-
+<div  *ngIf="!noPossibleEvolution">
+    <div class="row">
+        <div class="ml-2">
+            <img src="/assets/green-arrow.jpg" class="imgWH greenArrow"/>
+            <img src="{{pokemonImg}}" class="imgWH pl-5 ml-5 pkmImgEvolution"/>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <h5 class="text-left pl-0 col-10 evolutionTxt"> evolves into {{evolves_to | titlecase}} at level {{evolutionLevel}}</h5>
+    </div>
+</div>

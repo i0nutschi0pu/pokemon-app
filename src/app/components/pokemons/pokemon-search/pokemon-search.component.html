@@ -1,39 +1,14 @@
-
-<!-- move inline css to file-->
-
-<!--
-<form class="form-inline my-2 my-lg-0" style="float: right;"  #geeksForm="ngForm"
-    (keydown)="enterSubmit($event, geeksForm.form)"
-    (ngSubmit)="submitit(geeksForm.form);">
--->
-<form class="form-inline my-2 my-lg-0" style="float: right;" (ngSubmit)="handleSubmit($event, searchBox.value);">
+<form class="form-inline my-2 my-lg-0 float-right"(ngSubmit)="handleSubmit($event, searchBox.value);">
   <div id="search-component" >
   <label for="search-box">Pokemon Search</label>
-  <!-- 
-    <input #searchBox id="search-box" (input)="search(searchBox.value)"  (keyup.enter)="onEnter(searchBox.value)" 
-    class="form-control mr-sm-2" type="search" placeholder="Search"/>
-  -->
-  <!-- (keyup)="handleKeyUp($event, searchBox.value)"  -->
   <input #searchBox id="search-box" 
     class="form-control mr-sm-2" type="text" placeholder="Search" />
-    
   <ul class="search-errors pl-0 ml-0">
     <li class="pl-o ml-0" *ngFor="let error of errors ">
-        <p class="pl-0" style="background-color: white;">
+        <p class="pl-0 bkgWhite">
           {{error}}
         </p>
     </li>
   </ul>
-
-<!-- 
-  <ul class="search-result">
-    <li *ngFor="let pokemon of pokemons$ | async" >
-      <a routerLink="/detail/{{pokemon}}">
-        {{pokemon}}
-      </a>
-    
-    </li>
-  </ul>
--->
 </div>
 </form>

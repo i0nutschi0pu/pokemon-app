@@ -1,35 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
-import { HomeComponent } from './components/home/home.component';
-import { DetailsComponent } from './components/details/details.component';
-import { PokemonSearchComponent } from './components/pokemon-search/pokemon-search.component';
+import { PokemonListComponent } from './components/pokemons/pokemon-list/pokemon-list.component'; 
+import { DetailsComponent } from './components/pokemons/details/details.component';
+import { PokemonSearchComponent } from './components/pokemons/pokemon-search/pokemon-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PokemonStatisticsComponent } from './components/pokemon-statistics/pokemon-statistics.component';
-import { PokemonProfileComponent } from './components/pokemon-profile/pokemon-profile.component';
-import { PokemonEvolutionComponent } from './components/pokemon-evolution/pokemon-evolution.component';
-import { PokemonDamageComponent } from './components/pokemon-damage/pokemon-damage.component';
-import { ProductsComponent } from './components/products/products.component';
-import { CreateProductComponent } from './components/create-product/create-product.component';
+import { PokemonEvolutionComponent } from './components/pokemons/pokemon-evolution/pokemon-evolution.component';
+import { PokemonDamageComponent } from './components/pokemons/pokemon-damage/pokemon-damage.component'; 
+import { CreateProductComponent } from './components/products/create-product/create-product.component';
+import { ListProductsComponent } from './components/products/list-products/list-products.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpRequestInterceptor } from './service/request-interceptor';
+import { HasProductsGuard } from './guards/hasProducts.guards';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonListComponent,
-    HomeComponent,
     DetailsComponent,
     PokemonSearchComponent,
-    PokemonStatisticsComponent,
-    PokemonProfileComponent,
     PokemonEvolutionComponent,
     PokemonDamageComponent,
-    ProductsComponent,
     CreateProductComponent,
+    ListProductsComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,14 +37,12 @@ import { CreateProductComponent } from './components/create-product/create-produ
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       {
         path: 'pokemons',
         component: PokemonListComponent
-      },
-      {
-        path: 'home',
-        component: HomeComponent
       },
       {
         path: 'details/:id',
@@ -52,7 +50,8 @@ import { CreateProductComponent } from './components/create-product/create-produ
       },
       {
         path: 'products',
-        component: ProductsComponent
+        component: ListProductsComponent,
+        canActivate: [HasProductsGuard]
       },
       {
         path: 'create-product',
@@ -60,13 +59,19 @@ import { CreateProductComponent } from './components/create-product/create-produ
       },
       {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/pokemons',
         pathMatch: 'full'
       }
     ])
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptor,
+      multi: true,
+      },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

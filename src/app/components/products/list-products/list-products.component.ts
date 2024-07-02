@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListProductsComponent implements OnInit {
 
-  session: { 
+  productDetails: { 
     name: string; 
     description: string, 
     price: number, 
@@ -21,22 +21,16 @@ export class ListProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-
-    // bootstrapApplication(MenuComponent, {
-    //   providers: []
-    // });
   }
 
-  loadData()
+  loadData(): void
   {
     let data: any = localStorage.getItem('product');
-   // console.log(data);
     data = JSON.parse(data);
 
     if(data) {
       data.forEach((item: { [x: string]: string; }) => {
-    //    console.log(item['name']);
-        this.session.push(
+        this.productDetails.push(
           {
             name: item['name'],
             description: item['description'],
@@ -48,13 +42,7 @@ export class ListProductsComponent implements OnInit {
           }
         );
     });
-    }
-    
-  }
-
-  coverPhotoPath()
-  {
-    
+    } 
   }
 
 }

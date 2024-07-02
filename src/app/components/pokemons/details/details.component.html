@@ -1,7 +1,3 @@
-
-
-
-<!-- move inline css to file-->
 <div id="pokemon-details" class="row gray-bck">
   <div class="col-lg-8">
     <app-menu></app-menu>
@@ -11,22 +7,14 @@
   </div>
 </div>
 <main role="main" class="container">
-  <!-- <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
-    <img class="mr-3" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
-    <div class="lh-100">
-      <h6 class="mb-0 text-white lh-100">Bootstrap</h6>
-      <small>Since 2011</small>
-    </div>
-  </div> -->
-
   <div class="my-3 p-3 bg-white rounded box-shadow">
      <div class="media text-muted pt-3">
       <div *ngIf="pokemon">
-        <h2 class="text-center text-white mb-5 p-2" style="background-color: green;">{{pokemon.name | uppercase}}</h2>
+        <h2 class="text-center text-white mb-5 p-2 bckgreen">{{pokemon.name | uppercase}}</h2>
         <div class="row ml-0 pb-4">
           <div class="col-lg-12"></div>
-          <div *ngFor="let type of pokemonTypes" class="box mr-4" style="background-color: {{pokemonColor}};">
-            <h3 class="col-lg-12 text-white" style="background-color: {{type.color }};">{{type.name | uppercase }} </h3>
+          <div *ngFor="let type of pokemonTypes" class="box mr-4 bck{{pokemonColor}}" >
+            <h3 class="col-lg-12 text-white bck{{type.color}}">{{type.name | uppercase }} </h3>
           </div>
         </div>
         <div>
@@ -51,7 +39,7 @@
         </div>
         <div>
           <div>
-            <h4 class="text-left text-white mb-5 mt-5 p-2" style="background-color:green;">Profile</h4>
+            <h4 class="text-left text-white mb-5 mt-5 p-2 bckgreen">Profile</h4>
             <h2> {{pokemonType}} </h2>
             <div class="row pl-4">
               <div class="col-lg-6">
@@ -59,7 +47,7 @@
                 <h6>Catch rate</h6>
                 <h6>Egg groups</h6>
                 <h6>Abilities:
-                  <span *ngFor="let ability of pokemonAbs" class="box">
+                  <span *ngFor="let ability of pokemonAbilities" class="box">
                     <div class="center-display" id="container"> {{ability.name}} - </div>
                   </span>
                 </h6>
@@ -74,40 +62,26 @@
           </div>
         </div>
         <div class="row pl-2 mt-5 mb-5">
-          <h4 class="text-left p-2 text-white col-12" style="background-color: green;">Evolutions</h4>
+          <h4 class="text-left p-2 text-white col-12 bckgreen">Evolutions</h4>
           <div class="row ml-5 pl-5">
-            <div class="col-lg-2"></div>
-      
-            <div class="col-lg-1 mt-4">
-              <h5 class="text-right" >{{pokemon.name | uppercase}}</h5>
-              </div>
-              
-            <div class="col-lg-2">
-              <img src="{{pokemonImg}}"  class=" pt-5 mt-5" /> 
+            <div class="col-lg-1"></div>
+            <div class="col-lg-4 pl-5">
+              <img src="{{pokemonImg}}"  class=" mt-5" /> 
             </div>
-            
-            
-            <div class="col-lg-1">
-              <i class="fa fa-arrow-right text-center" aria-hidden="true"></i>
-            </div>
-          
-            <div class="mt-4 col-6">
+            <div class="pl-0 col-7">
               <app-pokemon-evolution></app-pokemon-evolution>
             </div>
-            <!-- <p>{{pokemon | json}}</p> -->
-            <!-- <p>{{pokemon.evolution.id}}</p>  -->
-            
+            <div class="col-lg-4 pl-0">
+              <h5 class="text-right pl-5 mtop">{{pokemon.name | titlecase }}</h5>
+            </div>
           </div>
-          
         </div>
-        
         <div class="row mt-5 mb-5">
-          <h4 class="text-left text-white p-2 col-12" style="background-color: green;">Damage when attacked</h4>
+          <h4 class="text-left text-white p-2 col-12 bckgreen">Damage when attacked</h4>
           <div class="row mt-5">
             <app-pokemon-damage></app-pokemon-damage>
           </div>
         </div>
-      
         <div class="mt-5">
           <div class="row">
             <div class="col-5"></div>
@@ -115,11 +89,7 @@
               <button type="button" class="btn btn-primary btn-lg btn-block" (click)="goBack()">go back</button>
             </div>
             <div class="col-5"></div>
-            
           </div>
-         
         </div>
     </div>
   </div>
-
-<!-- </main> -->

@@ -15,7 +15,6 @@
                 <div [formGroup]="productForm">
                   <div formArrayName="items">
                     <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
-                      <!-- <h1>{{item.controls.name.valid}}</h1> -->
                       <h1>Product Form</h1>
                       <div class="form-group">
                         <label>Name</label>
@@ -28,22 +27,22 @@
                       </div>
                       <div class="form-group">
                         <label>Description</label>
-                        <input type="text" class="form-control" placeholder="Description" formControlName="desc" required>
-                        <div class="alert-danger" *ngIf="!item.controls.desc.valid && (item.controls.desc.touched)">
-                          <div [hidden]="!item.controls.desc.errors">
+                        <input type="text" class="form-control" placeholder="Description" formControlName="description" required>
+                        <div class="alert-danger" *ngIf="!item.controls.description.valid && (item.controls.description.touched)">
+                          <div [hidden]="!item.controls.description.errors">
                             Description is required.
                           </div>
-                          <div [hidden]="!item.controls.desc.errors">
+                          <div [hidden]="!item.controls.description.errors">
                             Description must be have 10 character length.
                           </div>
-                          <div [hidden]="!item.controls.desc.errors">
+                          <div [hidden]="!item.controls.description.errors">
                             Description must be have 1000 character length.
                           </div>
                         </div>
                       </div>
                       <div class="form-group">
                         <label>Price</label>
-                        <input type="number" class="form-control" placeholder="price" formControlName="price" required>
+                        <input type="number" class="form-control" min="0" placeholder="price" formControlName="price" step="0.01" required>
                         <div class="alert-danger" *ngIf="!item.controls.price.valid && (item.controls.price.touched)">
                           <div [hidden]="!item.controls.price.errors">
                             Price is required.
@@ -98,15 +97,10 @@
                           </div>
                         </div>
                       </div>
-                      
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-1">
-                        <!-- <button  (click)="saveProduct(productForm.value)" type="submit" class="btn col-12 btn-large btn-success" 
-                          [disabled]="!productForm.valid">
-                          Save
-                        </button> -->
                     </div>
                     <div class="col-lg-3">
                       <button (click)="submit()" class="btn btn-large col-12 btn-success" [disabled]="!productForm.valid"> submit </button>
@@ -122,10 +116,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div *ngIf="session">
-          <!--   {{session | json}} -->
-          <!--   <h1>name: {{session.name}} </h1> -->
           </div>
     </div>
     <div class="col-lg-4"></div>
